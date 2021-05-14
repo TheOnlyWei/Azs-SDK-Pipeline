@@ -16,4 +16,8 @@ steps:
     targetType: 'inline'
     script: |
       Write-Host "Current Build.SourcesDirectory directory:"
-      Get-ChildItem -Path $(Build.SourcesDirectory) -Recurse
+      Get-ChildItem -Path -Recurse
+- task: PowerShell@2
+  displayName: Run Setup
+  inputs:
+    filePath: '$(Build.SourcesDirectory)\setup-test.ps1' 

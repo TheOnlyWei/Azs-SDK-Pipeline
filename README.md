@@ -29,6 +29,9 @@ This step requires a machine or VM with access to a self-hosted Azure Stack envi
     - Service Connection Name: Enter a service connection name.
 1. You can try verifying the connection by clicking the `Verify` button, but it may fail since Azure Stack is not well supported. If it shows an error, the service connection might still work regardless of the error. Instead of clicking `Verify and save`, click the drop-down arrow and click `Save without verification`.
 
+## Environment Setup
+1. To install software required for the environment, run the `tool\setup-environment.ps1` script manually on the agent. 
+
 ## Running Tests
 1. To run the test, simply run the script `run-test.ps1` with the following parameters:
     ```powershell

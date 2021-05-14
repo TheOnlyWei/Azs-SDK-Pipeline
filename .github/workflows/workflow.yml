@@ -1,4 +1,11 @@
-on: [push]
+on: 
+  push:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
 
 env:
   ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
@@ -8,30 +15,30 @@ jobs:
     runs-on: self-hosted
     steps:
 
-      - name: Login to AzureStack with Az Powershell
+      - name: Login to AzureStack with Az Powershell.
         uses: azure/login@releases/v1
         with:
           creds: ${{ secrets.BELLEVUE_AAD_SP_SECRET }}
           environment: 'AzureStack'
           enable-AzPSSession: true
 
-      - name: Run Az PowerShell Script Against AzureStack
-        uses: azure/powershell@v1
-        with:
-          azPSVersion: '3.1.0'
-          inlineScript: |
-            hostname
-            Get-AzContext
-            Get-AzResourceGroup
-
-      - name: Login to AzureStack with CLI
-        uses: azure/login@releases/v1
-        with:
-          creds: ${{ secrets.BELLEVUE_AAD_SP_SECRET }}
-          environment: 'AzureStack'
-          enable-AzPSSession: false
-
-      - name: Run Azure CLI Script Against AzureStack
+      - name: Test Az Powershell Commands.
+        shell: pwsh
         run: |
           hostname
-          az group list --output table
+          Get-AzContext
+          Get-AzResourceGroup
+
+      - name: Checkout AZS-SDK-PIPELINE
+        uses: actions/checkout@v2
+        with:
+          ref: add-initial-scripts
+
+      - name: Run Azure Stack SDK Samples.
+        shell: pwsh
+        env:
+          BELLEVUE_AAD_SP_SECRET: ${{ secrets.BELLEVUE_AAD_SP_SECRET }}
+        run: |
+          ${{ github.workspace }}\tool\setup-environment.ps1
+          ${{ github.workspace }}\run-sample.ps1
+          ${{ github.workspace }}\tool\cleanup-environment.ps1

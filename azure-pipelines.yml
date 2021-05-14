@@ -1,0 +1,19 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  name: Azs-SDK-Agents
+
+steps:
+- task: PowerShell@2
+  displayName: List Build.SourcesDirectory Directory
+  inputs:
+    targetType: 'inline'
+    script: |
+      Write-Host "Current Build.SourcesDirectory directory:"
+      Get-ChildItem -Path $(Build.SourcesDirectory) -Recurse

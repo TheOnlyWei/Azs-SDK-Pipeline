@@ -32,7 +32,7 @@ jobs:
       - name: Checkout AZS-SDK-PIPELINE
         uses: actions/checkout@v2
         with:
-          ref: add-initial-scripts
+          ref: ${{ github.ref }}
 
       - name: Run Azure Stack SDK Samples.
         shell: pwsh

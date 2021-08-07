@@ -29,10 +29,17 @@ jobs:
           Get-AzContext
           Get-AzResourceGroup
 
-      - name: Checkout AZS-SDK-PIPELINE
+      - name: Checkout ${{ github.repository }}.
         uses: actions/checkout@v2
         with:
           ref: ${{ github.ref }}
+
+      - name: Checkout Another Repository.
+        uses: actions/checkout@v2
+        with:
+          repository: Azure-Samples/Hybrid-compute-nodejs-create-vm
+          ref: master
+          path: ${{ github.workspace }}\temp
 
       - name: Run Azure Stack SDK Samples.
         shell: pwsh

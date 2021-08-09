@@ -7,9 +7,6 @@ on:
         required: true
         default: 'warning'
 
-env:
-  ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
-
 jobs: 
   azurestack-test:
     runs-on: self-hosted
